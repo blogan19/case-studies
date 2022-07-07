@@ -1,0 +1,33 @@
+<!-- MCQ  single best answer--> 
+{% for q in questions %}
+  {% if q.question_type == "mcq" %}
+  <div class="container mt-3 p-3 bg-light text-dark  rounded">
+    <div class="row">
+      <div class="col-sm-10">
+        <h3> {{q.question_title}}</h3>
+      </div>
+      <div class="col-sm-2">
+        <input type="radio" class="btn-check" name="mcq_outlined" id="mcqAttemptFlag" autocomplete="off" disabled>
+        <label class="btn btn-outline-success" for="mcqAttemptFlag"  id="mcqAttemptFlagLabel">unattempted</label>
+      </div>
+    </div>
+    <hr>
+    <p>{{q.question}}</p>
+
+    {% for opt in q.options %}
+    <div class="form-check">
+      <input type="radio" class="form-check-input" id="'{{opt}}'" name="optradio" value="option1" onchange="mcqAttempt()">
+      <label class="form-check-label" for="'{{opt}}'">{{opt}}</label>
+    </div>
+    {% endfor %}
+       
+  </div>
+  {% endif %}                         
+{% endfor %}
+
+  <script>
+    const mcqAttempt = () => {
+        document.getElementById('mcqAttemptFlag').checked = true
+        document.getElementById('mcqAttemptFlagLabel').innerHTML = 'Attempted'
+    }
+  </script>

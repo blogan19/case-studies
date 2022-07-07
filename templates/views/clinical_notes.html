@@ -1,0 +1,24 @@
+ <!-- Offcanvas Sidebar -->
+ <div class="offcanvas offcanvas-start" id="clinicalNotesCanvas" style="width: 100%">
+    <div class="offcanvas-header">
+    <h1 class="offcanvas-title"></h1>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        {% for note in clinical_notes %}
+            <h5>{{note.note_datetime}}</h5>
+            <p>{{note.note}}</p>
+        {% endfor %}
+        
+    </div>
+</div>
+
+<script>
+     
+     let biochemistry = JSON.parse('{{biochemistry|tojson|safe}}')
+     
+   
+    
+     
+     
+</script>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <link rel="icon" href="data:,">
+       <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <!-- Latest compiled and minified CSS -->
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+       <!-- Latest compiled JavaScript -->
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+       <style type="text/css"></style>
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="#">Patient Details</a>
+                  <a class="navbar-brand" href="#">Allergies</a>
+                </div>
+              </nav>
+        </header>
+        <main> 
+            <div class="container mt-3">
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    {{case_instructions}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            
+            <div class="container mt-3 text-center">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#clinicalNotesCanvas">Clinical Notes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#bloodsCanvas">Biochemistry</button>
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="offcanvas" data-bs-target="#observationsCanvas">Observations</button>
+                  </div>
+            </div>
+            <hr/>           
+
+            <!-- Display Medication List -->
+            <div class="container mt-3">
+                <h4>Prescription Chart</h4>
+            </div>
+            {% for med in medications %}
+            <div class="container bg-light mt-3 rounded">
+                <div class="row">
+                    <div class="col-sm-3 py-2">
+                        <i class="text-muted">Drug</i>
+                        <span class="mx-3">{{med.drug_name}} {{med.form}}</span>
+                    </div>    
+                    <div class="col-sm-3 py-2">
+                        <i class="text-muted">Dose</i>
+                        <span class="mx-3">{{med.dose}}</span>
+                    </div>
+                    <div class="col-sm-4 py-2">
+                        <i class="text-muted">Frequency</i>
+                        <span class="mx-3">{{med.frequency}}</span>
+                    </div>
+                    <div class="col-sm-2 py-2">
+                        <i class="text-muted">Route</i>
+                        <span class="mx-3">{{med.route}}</span>
+                    </div> 
+                </div>
+    
+                <div class="row">
+                    <div class="col-sm-3 py-2">
+                        <i class="text-muted">Start Date</i>
+                        <span class="mx-3">{{med.start_date}}</span>
+                    </div>
+                    <div class="col-sm-3 py-2">
+                        <i class="text-muted">Stop Date</i>
+                        <span class="mx-3">{{med.end_date}}</span>
+                    </div>
+                    <div class="col-sm-4 py-2">
+                        {% if med.indication %}
+                            <i class="text-muted">Indication</i>
+                            <span class="mx-3">{{med.indication}}</span>
+                        {% endif %}
+                    </div>    
+                    
+                    {% if med.notes %}
+                        <div class="col-sm-2 py-2 center">
+                            <button type="button" class="btn btn-outline-info" data-toggle="tooltip" title="{{med.notes}}">Rx Note</a>
+                        </div>
+                    {% endif %}
+                    
+                </div>
+            </div>
+            {% endfor %}
+            
+            <hr/>
+            <!--Questions-->
+            <div class="container">
+                <div id="accordion">
+                    <div class="card">
+                    <div class="card-header" data-bs-toggle="collapse" href="#collapseOne">
+                        <a class="btn" >
+                            Questions
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="collapse " data-bs-parent="#accordion">
+                        <div class="card-body">
+                            
+                            {% include 'questions/mcqQuestion.html' %}
+                            <button type="button" class="btn btn-success py-2 mt-3">Submit Answers</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+
+            <!--Of canvas-->
+            {% include 'views/bloods.html' %}
+            {% include 'views/clinical_notes.html' %}
+            {% include 'views/observations.html' %}
+
+           
+        </main>
+        
+    <script>
+       
+       
+
+        
+        
+       
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
+    </script>
+    </body>
+    </html>

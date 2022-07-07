@@ -1,0 +1,36 @@
+ <!-- Offcanvas Sidebar -->
+ <div class="offcanvas offcanvas-start" id="bloodsCanvas" style="width: 100%">
+    <div class="offcanvas-header">
+    <h1 class="offcanvas-title"></h1>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div id="bloodsTable"> </div>
+        
+    </div>
+</div>
+
+<script>
+     
+     let biochemistry = JSON.parse('{{biochemistry|tojson|safe}}')
+     
+     //eGFR
+     let eGFR = biochemistry[0]
+
+     let table = '<table class="table"><thead><tr><th></th>';
+     for(i of eGFR['recorded_date']){
+        table += '<th scope="col">' +i+ '</th>'
+     }
+     table += '</tr></thead><tbody><tr><td>eGFR</td>'
+     for(i of eGFR['results']){
+        table+= '<td>'+i+'ml/min</td>'
+     }
+     table += '</tr></tbody></table>'
+
+     
+     document.getElementById('bloodsTable').innerHTML = table
+     console.log(biochemistry[0])
+    
+     
+     
+</script>
