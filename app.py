@@ -6,7 +6,7 @@ import json
 
 #creates a class for our app
 app= Flask(__name__)
-app.secret_key = "widge"
+app.secret_key = "test"
 
 @app.route('/')
 def index():
@@ -33,6 +33,6 @@ def load_session():
     return render_template("case_study.html", medications=medications, biochemistry=biochemistry, case_instructions=case_instructions,clinical_notes=clinical_notes,questions=questions)
 
 
-app.run(port=5000, debug=True)
+#app.run(port=5000, debug=True)
 
 
